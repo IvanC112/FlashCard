@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="createButton">
+        <button id="createFC">Create FlashCard</button>
+    </div>
+    <div class="card-container">
+        <div class="header">
+            <h1>Memory Mentor</h1>
+            <button id="closeButton">X</button>
+        </div>
+        <div class="content">
+            <div class="question">
+                <h3>Question:</h3>
+                <textarea id="questionText" placeholder="Type the question here" maxlength="50"></textarea>
+            </div>
+            <div class="answer">
+                <h3>Answer:</h3>
+                <textarea id="answerText" placeholder="Type the answer here" maxlength="50"></textarea>
+            </div>
+            <div>
+                <button id="saveButton">Save</button>
+            </div>
+        </div>
+    </div>
+    <div class="flashcards">
+    </div>
+</body>
+</html>
