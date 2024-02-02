@@ -8,8 +8,11 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="createButton">
-        <button id="createFC">Create FlashCard</button>
+    <div class="userButtons">
+        <div class="createButton">
+            <button id="removeAll">Remove All</button>
+            <button id="createFC">Create FlashCard</button>
+        </div>
     </div>
     <div class="card-container">
         <div class="header">
@@ -19,11 +22,11 @@
         <div class="content">
             <div class="question">
                 <h3>Question:</h3>
-                <textarea id="questionText" placeholder="Type the question here" maxlength="50"></textarea>
+                <textarea id="questionText" placeholder="Type the question here" maxlength="90"></textarea>
             </div>
             <div class="answer">
                 <h3>Answer:</h3>
-                <textarea id="answerText" placeholder="Type the answer here" maxlength="50"></textarea>
+                <textarea id="answerText" placeholder="Type the answer here" maxlength="90"></textarea>
             </div>
             <div>
                 <button id="saveButton">Save</button>
