@@ -3,14 +3,14 @@ const removeAll = document.querySelector('#removeAll');
 const cardContainer = document.querySelector('.card-container');
 const closeButton = document.querySelector('#closeButton');
 const saveButton = document.querySelector('#saveButton');
+const saveEdit = document.querySelector('#saveEdit');
 const flashContainer = document.querySelector('.flashcards');
 const questionText = document.querySelector('#questionText');   //questionText is a reference to the textarea for the user's question
 const answerText = document.querySelector('#answerText');       //answerText is a reference to the textarea for the user's answer
-const flashcardObjects = [];  //array of objects, each with a question and answer where whenever the user presses save we append the value of questionText and answerText to the array
+let flashcardObjects = [];  //array of objects, each with a question and answer where whenever the user presses save we append the value of questionText and answerText to the array
 let userQuestion;
 let userAnswer;
 let flashcardIndex = 0;
-
 
 createFC.addEventListener('click', () => {
     cardContainer.style.display = 'block';
@@ -37,6 +37,7 @@ answerText.addEventListener('input', ()=>{
 })
 
 saveButton.addEventListener('click', () => {
+
     if (flashcardIndex === 11) {
         createFC.disabled = true;
     }
@@ -83,7 +84,7 @@ saveButton.addEventListener('click', () => {
 
         if (showAnswer === true) {
             const correspondingQuestion = questionContainer.textContent;
-            flashcardObjects.forEach((item) => {
+            flashcardObjects.forEach(item => {
                 if (item.question == correspondingQuestion) {
                     answerContainer.textContent = item.answer;
                 }
@@ -96,5 +97,19 @@ saveButton.addEventListener('click', () => {
         }
     });
 
-});
+    removeButton.addEventListener('click', ()=>{
+        const correspondingQuestion = questionContainer.textContent;
+        const cardsInDOM = document.querySelectorAll('.front');
 
+        flashcardObjects = flashcardObjects.filter(flashCard => flashCard.question !== correspondingQuestion);
+        flashcardIndex--;
+
+        cardsInDOM.forEach(card => {
+            if (card.firstChild.textContent === correspondingQuestion) {
+                card.remove();
+            }
+        })
+
+    });
+
+});

@@ -102,6 +102,19 @@ h3 {
     box-shadow:-5px -5px 15px #d6d6eb80;
 }
 
+#saveEdit {
+    margin-top:5px;
+    cursor:pointer;
+    padding:10px;
+    width:500px;
+    border-radius:30px;
+    color:white;
+    background:transparent;
+    border:1px solid white;
+    box-shadow:-5px -5px 15px #d6d6eb80;
+}
+
+
 .flashcards {
     display:flex;
     gap:50px;
@@ -121,8 +134,12 @@ h3 {
     background:linear-gradient(45deg, #0a0a0a,#d6d6eb80);
     color:white;
     border:2px solid #d6d6eb80;
+}
+
+.front:hover {
     box-shadow:-3px -3px 15px #d6d6eb80;
 }
+
 
 .displayQuestion {
     position:absolute;
@@ -133,7 +150,6 @@ h3 {
 
 
 .showButton {
-    cursor:pointer; 
     width:280px; 
     height:30px;
     padding:5px; 
@@ -144,6 +160,7 @@ h3 {
 }
 
 .showButton:hover {
+    cursor:pointer;
     background-color: #d6d6eb80;
 }
 
