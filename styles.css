@@ -10,7 +10,6 @@ body {
     position:relative;
 }
 
-
 .createButton {
     display:flex;
     justify-content:space-between;
@@ -28,6 +27,7 @@ body {
 
 #createFC:hover, #removeAll:hover {
     background:transparent;
+    color:white;
 }
 
 #removeAll {
@@ -103,6 +103,7 @@ h3 {
 }
 
 #saveEdit {
+    display:none;
     margin-top:5px;
     cursor:pointer;
     padding:10px;
@@ -189,8 +190,13 @@ h3 {
 
 .showingAnswer {
     position:absolute;
+    display:none;
     text-align:center;
     width:100%;
     margin: 0 auto;
     top:60%;
+}
+
+.hidingAnswer {
+    display:none;
 }

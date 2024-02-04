@@ -5,67 +5,73 @@ const closeButton = document.querySelector('#closeButton');
 const saveButton = document.querySelector('#saveButton');
 const saveEdit = document.querySelector('#saveEdit');
 const flashContainer = document.querySelector('.flashcards');
-const questionText = document.querySelector('#questionText');   //questionText is a reference to the textarea for the user's question
-const answerText = document.querySelector('#answerText');       //answerText is a reference to the textarea for the user's answer
-let flashcardObjects = [];  //array of objects, each with a question and answer where whenever the user presses save we append the value of questionText and answerText to the array
+const questionText = document.querySelector('#questionText');
+const answerText = document.querySelector('#answerText');
+let correspondingQuestion;
+let flashcardObjects = [];
 let userQuestion;
 let userAnswer;
 let flashcardIndex = 0;
+let isEditMode = false;
+const answerContainer = document.createElement('div');
+
 
 createFC.addEventListener('click', () => {
+    cardContainer.style.zIndex = '1000';
     cardContainer.style.display = 'block';
+    questionText.value = '';
+    answerText.value = '';
 });
 
-removeAll.addEventListener('click', ()=> {
+removeAll.addEventListener('click', () => {
     flashContainer.textContent = '';
     flashcardObjects.splice(0, flashcardIndex);
     flashcardIndex = 0;
-})
+});
 
 closeButton.addEventListener('click', () => {
     cardContainer.style.display = 'none';
+    if (!isEditMode) {
+        questionText.value ='';
+        answerText.value = '';
+    }
 });
 
-questionText.addEventListener('input', ()=>{
+questionText.addEventListener('input', () => {
     userQuestion = questionText.value;
-    
-})
+});
 
-answerText.addEventListener('input', ()=>{
+answerText.addEventListener('input', () => {
     userAnswer = answerText.value;
-
-})
+});
 
 saveButton.addEventListener('click', () => {
-
     if (flashcardIndex === 11) {
         createFC.disabled = true;
     }
 
     const individualCard = document.createElement('div');
     const questionContainer = document.createElement('div');
-    const answerContainer = document.createElement('div');
     const flipbuttonContainer = document.createElement('div');
     const optionsContainer = document.createElement('div');
-    const editButton = document.createElement('button');
     const removeButton = document.createElement('button');
+    const editButton = document.createElement('button');
     const showButton = document.createElement('button');
     let showAnswer = false;
 
-    flashcardObjects.push({ question: userQuestion, answer: userAnswer});
+    flashcardObjects.push({ question: userQuestion, answer: userAnswer });
     questionText.value = '';
     answerText.value = '';
-    userQuestion = '';
-    userAnswer = '';
     cardContainer.style.display = 'none';
 
     individualCard.classList.add('front');
     questionContainer.classList.add('displayQuestion');
-    answerContainer.classList.add('showingAnswer');
     showButton.classList.add('showButton');
+    answerContainer.classList.add('showingAnswer');
     optionsContainer.classList.add('editORdelete');
 
     questionContainer.textContent = flashcardObjects[flashcardIndex++].question;
+
     flipbuttonContainer.style.cssText = 'margin:0 auto; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%)';
     showButton.textContent = 'Show/Hide';
     editButton.textContent = 'Edit';
@@ -76,29 +82,31 @@ saveButton.addEventListener('click', () => {
     flipbuttonContainer.append(showButton);
     individualCard.append(questionContainer);
     individualCard.append(flipbuttonContainer);
+    individualCard.append(answerContainer);
     individualCard.append(optionsContainer);
     flashContainer.append(individualCard);
 
     showButton.addEventListener('click', () => {
         showAnswer = !showAnswer;
 
-        if (showAnswer === true) {
-            const correspondingQuestion = questionContainer.textContent;
+        if (showAnswer) {
+            correspondingQuestion = questionContainer.textContent;
+
+            answerContainer.style.display ='block';
+
             flashcardObjects.forEach(item => {
                 if (item.question == correspondingQuestion) {
                     answerContainer.textContent = item.answer;
                 }
             });
-
-            individualCard.append(answerContainer);        
+        } else {
+            answerContainer.removeAttribute('style');
         }
-         else {
-            answerContainer.textContent = '';
-        }
+        correspondingQuestion = '';
     });
 
-    removeButton.addEventListener('click', ()=>{
-        const correspondingQuestion = questionContainer.textContent;
+    removeButton.addEventListener('click', () => {
+        correspondingQuestion = questionContainer.textContent;
         const cardsInDOM = document.querySelectorAll('.front');
 
         flashcardObjects = flashcardObjects.filter(flashCard => flashCard.question !== correspondingQuestion);
@@ -108,8 +116,48 @@ saveButton.addEventListener('click', () => {
             if (card.firstChild.textContent === correspondingQuestion) {
                 card.remove();
             }
-        })
+        });
+        correspondingQuestion = '';
+    });
+
+    editButton.addEventListener('click', () => {
+        isEditMode = true;
+        correspondingQuestion = questionContainer.textContent;
+        let correspondingAnswer;
+    
+        flashcardObjects.forEach(flashCard => {
+            if (flashCard.question === correspondingQuestion) {
+                correspondingAnswer = flashCard.answer;
+            }
+        });
+    
+        cardContainer.style.display = 'block';
+        saveButton.style.display = 'none';
+        saveEdit.style.display = 'block';
+        questionText.value = correspondingQuestion;
+        answerText.value = correspondingAnswer;
 
     });
 
 });
+
+saveEdit.addEventListener('click', ()=>{
+    const editedFlashCard = document.querySelectorAll('.front');
+    const editObject = flashcardObjects.find(flashcard => flashcard.question === correspondingQuestion);
+   
+    editObject.question = userQuestion;
+    editObject.answer = userAnswer;
+
+    editedFlashCard.forEach(flashcard => {
+        if (flashcard.querySelector('.displayQuestion').textContent === correspondingQuestion) {
+            flashcard.querySelector('.displayQuestion').textContent = editObject.question;
+            flashcard.querySelector('.showingAnswer').textContent = editObject.answer;
+        }
+    });
+   
+    cardContainer.style.display = 'none';
+    saveEdit.style.display = 'none';
+    saveButton.style.display = 'block';
+});
+
+
