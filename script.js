@@ -13,8 +13,9 @@ let userQuestion;
 let userAnswer;
 let flashcardIndex = 0;
 let isEditMode = false;
-const answerContainer = document.createElement('div');
 
+
+const answerContainer = document.createElement('div');
 
 createFC.addEventListener('click', () => {
     cardContainer.style.zIndex = '1000';
@@ -46,8 +47,10 @@ answerText.addEventListener('input', () => {
 });
 
 saveButton.addEventListener('click', () => {
-    if (flashcardIndex === 11) {
-        createFC.disabled = true;
+
+    if (userQuestion === '' || userQuestion === undefined || userAnswer === '' || userAnswer === undefined) {
+       alert('Please enter a response for the question and answer before creating a flashcard');
+       return;
     }
 
     const individualCard = document.createElement('div');
@@ -62,6 +65,8 @@ saveButton.addEventListener('click', () => {
     flashcardObjects.push({ question: userQuestion, answer: userAnswer });
     questionText.value = '';
     answerText.value = '';
+    userQuestion = '';
+    userAnswer = '';
     cardContainer.style.display = 'none';
 
     individualCard.classList.add('front');
@@ -113,7 +118,7 @@ saveButton.addEventListener('click', () => {
         flashcardIndex--;
 
         cardsInDOM.forEach(card => {
-            if (card.firstChild.textContent === correspondingQuestion) {
+            if (card.querySelector('.displayQuestion').textContent === correspondingQuestion) {
                 card.remove();
             }
         });
@@ -158,6 +163,7 @@ saveEdit.addEventListener('click', ()=>{
     cardContainer.style.display = 'none';
     saveEdit.style.display = 'none';
     saveButton.style.display = 'block';
+    isEditMode = false;
 });
 
 
