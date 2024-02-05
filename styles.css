@@ -19,7 +19,6 @@ body {
 #createFC {
     padding:20px;
     border-radius:30px;
-    box-shadow:0px 3px 20px #d9dee780;
     cursor:pointer;
     font-weight:bold;
     border:none;
@@ -28,12 +27,12 @@ body {
 #createFC:hover, #removeAll:hover {
     background:transparent;
     color:white;
+    box-shadow:-5px -5px 10px #d9dee780
 }
 
 #removeAll {
     padding:20px;
     border-radius:30px;
-    box-shadow:0px 3px 20px #d9dee780;
     cursor:pointer;
     font-weight:bold;
     border:none;
@@ -99,6 +98,9 @@ h3 {
     color:white;
     background:transparent;
     border:1px solid white;
+}
+
+#saveButton:hover {
     box-shadow:-5px -5px 15px #d6d6eb80;
 }
 
@@ -132,9 +134,9 @@ h3 {
     height:230px; 
     border-radius:10px; 
     padding:10px;
-    background:linear-gradient(45deg, #0a0a0a,#d6d6eb80);
+    background:linear-gradient(45deg, #0a0a0a, #3a4452);
     color:white;
-    border:2px solid #d6d6eb80;
+    border:1px solid #d6d6eb80;
 }
 
 .front:hover {
@@ -190,13 +192,9 @@ h3 {
 
 .showingAnswer {
     position:absolute;
-    display:none;
     text-align:center;
+    display:none;
     width:100%;
     margin: 0 auto;
     top:60%;
-}
-
-.hidingAnswer {
-    display:none;
 }

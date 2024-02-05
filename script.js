@@ -14,14 +14,13 @@ let userAnswer;
 let flashcardIndex = 0;
 let isEditMode = false;
 
-
-const answerContainer = document.createElement('div');
-
 createFC.addEventListener('click', () => {
     cardContainer.style.zIndex = '1000';
     cardContainer.style.display = 'block';
     questionText.value = '';
     answerText.value = '';
+    userQuestion = '';
+    userAnswer = '';
 });
 
 removeAll.addEventListener('click', () => {
@@ -56,6 +55,7 @@ saveButton.addEventListener('click', () => {
     const individualCard = document.createElement('div');
     const questionContainer = document.createElement('div');
     const flipbuttonContainer = document.createElement('div');
+    const answerContainer = document.createElement('div');
     const optionsContainer = document.createElement('div');
     const removeButton = document.createElement('button');
     const editButton = document.createElement('button');
@@ -97,15 +97,14 @@ saveButton.addEventListener('click', () => {
         if (showAnswer) {
             correspondingQuestion = questionContainer.textContent;
 
-            answerContainer.style.display ='block';
-
             flashcardObjects.forEach(item => {
                 if (item.question == correspondingQuestion) {
                     answerContainer.textContent = item.answer;
                 }
+                answerContainer.style.display = 'block';
             });
         } else {
-            answerContainer.removeAttribute('style');
+            answerContainer.style.display = 'none';
         }
         correspondingQuestion = '';
     });
@@ -141,7 +140,8 @@ saveButton.addEventListener('click', () => {
         saveEdit.style.display = 'block';
         questionText.value = correspondingQuestion;
         answerText.value = correspondingAnswer;
-
+        userQuestion = correspondingQuestion;
+        userAnswer = correspondingAnswer;
     });
 
 });
@@ -160,10 +160,14 @@ saveEdit.addEventListener('click', ()=>{
         }
     });
    
+    isEditMode = false;
+
     cardContainer.style.display = 'none';
     saveEdit.style.display = 'none';
     saveButton.style.display = 'block';
-    isEditMode = false;
+
+    userQuestion = '';
+    userAnswer = '';
 });
 
 
